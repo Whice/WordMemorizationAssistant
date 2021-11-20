@@ -12,6 +12,9 @@ namespace WordMemorizationAssistant
 {
     public partial class FormWordMemorizationAssistant : Form
     {
+
+        private List<KeyValuePair<String, String>> listOfWordAndTheirTranslate = new List<KeyValuePair<String, String>>();
+
         public FormWordMemorizationAssistant()
         {
             InitializeComponent();
