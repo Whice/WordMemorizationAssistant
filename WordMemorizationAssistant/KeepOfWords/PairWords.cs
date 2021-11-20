@@ -38,6 +38,10 @@ namespace WordMemorizationAssistant.KeepOfWords
             learningPercentage = 0;
         }
 
+        /// <summary>
+        /// Сравнивает значения иностранного слова и его перевода.
+        /// </summary>
+        /// <returns></returns>
         public override bool Equals(object obj)
         {
             if(obj is PairWords pair)
@@ -50,13 +54,46 @@ namespace WordMemorizationAssistant.KeepOfWords
             }
             return false;
         }
+        /// <summary>
+        /// Сравнивает значения иностранного слова и его перевода.
+        /// </summary>
+        /// <param name="l"></param>
+        /// <param name="r"></param>
+        /// <returns></returns>
         public static bool operator ==(PairWords l, PairWords r)
         {
             return l.Equals(r);
         }
+        /// <summary>
+        /// Сравнивает значения иностранного слова и его перевода.
+        /// </summary>
+        /// <param name="l"></param>
+        /// <param name="r"></param>
+        /// <returns></returns>
         public static bool operator !=(PairWords l, PairWords r)
         {
             return !l.Equals(r);
+        }
+
+        /// <summary>
+        /// Сравнивает процент выученности пар.
+        /// </summary>
+        /// <param name="l"></param>
+        /// <param name="r"></param>
+        /// <returns></returns>
+        public static bool operator <(PairWords l, PairWords r)
+        {
+            return l.learningPercentage < r.learningPercentage;
+        }
+        /// <summary>
+        /// Сравнивает процент выученности пар.
+        /// </summary>
+        /// <param name="l"></param>
+        /// <param name="r"></param>
+        /// <returns></returns>
+        public static bool operator >(PairWords l, PairWords r)
+        {
+            return l.learningPercentage > r.learningPercentage;
         }
 
     }
