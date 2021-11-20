@@ -6,29 +6,34 @@ using System.Threading.Tasks;
 
 namespace WordMemorizationAssistant.KeepOfWords
 {
+    /// <summary>
+    /// Хранитель слов.
+    /// Соддержит 
+    /// </summary>
     [Serializable]
     public class KeeperOfWords
     {
-        public List<WordUnit> englishWords = new List<WordUnit>();
-        public List<WordUnit> russianWords = new List<WordUnit>();
+        /// <summary>
+        ///  Список иностранных слов и их переводов.
+        /// </summary>
+        public List<PairWords> pairsWords = new List<PairWords>();
 
 
         #region Поиск
 
-       /// <summary>
-       /// Ищет единицу слова в списке.
-       /// </summary>
-       /// <param name="unit"></param>
-       /// <param name="list"></param>
-       /// <returns>Номер единицы слова, если находит. -1, если не находит.</returns>
-        private static int FindInList(WordUnit unit, List<WordUnit> list)
+        /// <summary>
+        /// Проверить, имеется ли уже такая пара.
+        /// </summary>
+        /// <param name="pair">Пара для пароверки.</param>
+        /// <returns>true, если имеется.</returns>
+        private bool ContainsPair(PairWords pair)
         {
-            for(int i=0;i<list.Count;i++)
+            for(int i=0;i< this.pairsWords.Count;i++)
             {
-                if (list[i] == unit)
-                    return i;
+                if (this.pairsWords[i] == pair)
+                    return true;
             }
-            return -1;
+            return false;
         }
 
         #endregion
@@ -38,38 +43,12 @@ namespace WordMemorizationAssistant.KeepOfWords
         /// </summary>
         /// <param name="englishWord">Иностранное слово.</param>
         /// <param name="russianWord">Его перевод.</param>
-        public void Add(WordUnit englishWord, WordUnit russianWord)
+        public void Add(String englishWord, String russianWord)
         {
-            //Просмотр наличия таких слов в списках
-            //
-            if(this.englishWords.Contains(englishWord))
+            PairWords newPairWords = new PairWords(englishWord, russianWord);
+            if (!ContainsPair(newPairWords))
             {
-                int numberWordInList = FindInList(englishWord, this.englishWords);
-                englishWord = this.englishWords[numberWordInList];
-            }
-            else
-            {
-                this.englishWords.Add(englishWord);
-            }
-
-            if(this.russianWords.Contains(russianWord))
-            {
-                int numberWordInList = FindInList(russianWord, this.russianWords);
-                russianWord = this.russianWords[numberWordInList];
-            }
-            else
-            {
-                this.russianWords.Add(russianWord);
-            }
-
-            //Просмотр наличия переводов у асмих слов друг друга
-            if(!englishWord.translates.Contains(russianWord))
-            {
-                englishWord.translates.Add(russianWord);
-            }
-            if(!russianWord.translates.Contains(englishWord))
-            {
-                russianWord.translates.Add(englishWord);
+                this.pairsWords.Add(newPairWords);
             }
         }
 
